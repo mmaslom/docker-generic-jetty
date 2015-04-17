@@ -1,4 +1,4 @@
-FROM otechlabs/busybox-java:jdk8
+FROM oberthur/docker-busybox-java:jdk8_8.40.26
 
 MAINTAINER Dawid Malinowski <d.malinowski@oberthur.com>
 
@@ -8,6 +8,8 @@ ENV JETTY_VERSION_MINOR 9.2.10
 ENV JETTY_VERSION_BUILD v20150310
 ENV MARIADB_VERSION 1.1.8
 WORKDIR /opt/app
+
+RUN opkg-install bash
 
 # Add user app
 RUN echo "app:x:999:999::/opt/app:/bin/false" >> /etc/passwd; \
@@ -21,11 +23,12 @@ RUN curl -L -O http://download.eclipse.org/jetty/stable-${JETTY_VERSION_MAJOR}/d
 RUN gunzip jetty-distribution-${JETTY_VERSION_MINOR}.${JETTY_VERSION_BUILD}.tar.gz \
     && tar -xf jetty-distribution-${JETTY_VERSION_MINOR}.${JETTY_VERSION_BUILD}.tar -C /opt/app
 
-RUN mv /opt/app/jetty-* /opt/app/jetty \
-	&& mkdir /opt/app/jetty/tmp \
-	&& sed -i 's#<Set name="sendServerVersion"><Property name="jetty.send.server.version" default="true" /></Set>#<Set name="sendServerVersion"><Property name="jetty.send.server.version" default="false" /></Set>#' /opt/app/jetty/etc/jetty.xml \
-	&& sed -i 's#<New id="DefaultHandler" class="org.eclipse.jetty.server.handler.DefaultHandler"/>#<New id="DefaultHandler" class="org.eclipse.jetty.server.handler.DefaultHandler">\n               <Set name="serveIcon">false</Set>\n               <Set name="showContexts">false</Set>\n             </New>#' /opt/app/jetty/etc/jetty.xml \
-	&& curl -s -k -L -C - http://central.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/${MARIADB_VERSION}/mariadb-java-client-${MARIADB_VERSION}.jar > /opt/app/jetty/lib/ext/mariadb-java-client-${MARIADB_VERSION}.jar
+RUN rm jetty-distribution-${JETTY_VERSION_MINOR}.${JETTY_VERSION_BUILD}.tar \
+    && mv /opt/app/jetty-* /opt/app/jetty \
+    && mkdir /opt/app/jetty/tmp \
+    && sed -i 's#<Set name="sendServerVersion"><Property name="jetty.send.server.version" default="true" /></Set>#<Set name="sendServerVersion"><Property name="jetty.send.server.version" default="false" /></Set>#' /opt/app/jetty/etc/jetty.xml \
+    && sed -i 's#<New id="DefaultHandler" class="org.eclipse.jetty.server.handler.DefaultHandler"/>#<New id="DefaultHandler" class="org.eclipse.jetty.server.handler.DefaultHandler">\n               <Set name="serveIcon">false</Set>\n               <Set name="showContexts">false</Set>\n             </New>#' /opt/app/jetty/etc/jetty.xml \
+    && curl -s -k -L -C - http://central.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/${MARIADB_VERSION}/mariadb-java-client-${MARIADB_VERSION}.jar > /opt/app/jetty/lib/ext/mariadb-java-client-${MARIADB_VERSION}.jar
 
 EXPOSE 8080
 
