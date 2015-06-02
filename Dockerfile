@@ -4,8 +4,8 @@ MAINTAINER Dawid Malinowski <d.malinowski@oberthur.com>
 
 ENV HOME=/opt/app
 ENV JETTY_VERSION_MAJOR 9
-ENV JETTY_VERSION_MINOR 9.2.11
-ENV JETTY_VERSION_BUILD v20150529
+ENV JETTY_VERSION_MINOR 9.1.5
+ENV JETTY_VERSION_BUILD v20140505
 ENV MARIADB_VERSION 1.1.8
 WORKDIR /opt/app
 
@@ -17,8 +17,8 @@ RUN echo "app:x:999:999::/opt/app:/bin/false" >> /etc/passwd; \
     mkdir -p /opt/app; chown app:app /opt/app
 
 # Install Jetty 9
-RUN curl -L -O http://download.eclipse.org/jetty/stable-${JETTY_VERSION_MAJOR}/dist/jetty-distribution-${JETTY_VERSION_MINOR}.${JETTY_VERSION_BUILD}.tar.gz \
-    && echo http://download.eclipse.org/jetty/stable-${JETTY_VERSION_MAJOR}/dist/jetty-distribution-${JETTY_VERSION_MINOR}.${JETTY_VERSION_BUILD}.tar.gz \
+RUN curl -L -O http://archive.eclipse.org/jetty/${JETTY_VERSION_MINOR}.${JETTY_VERSION_BUILD}/dist/jetty-distribution-${JETTY_VERSION_MINOR}.${JETTY_VERSION_BUILD}.tar.gz \
+    && echo http://archive.eclipse.org/jetty/${JETTY_VERSION_MINOR}.${JETTY_VERSION_BUILD}/dist/jetty-distribution-${JETTY_VERSION_MINOR}.${JETTY_VERSION_BUILD}.tar.gz \
     && gunzip jetty-distribution-${JETTY_VERSION_MINOR}.${JETTY_VERSION_BUILD}.tar.gz \
     && tar -xf jetty-distribution-${JETTY_VERSION_MINOR}.${JETTY_VERSION_BUILD}.tar -C /opt/app \
     && rm jetty-distribution-${JETTY_VERSION_MINOR}.${JETTY_VERSION_BUILD}.tar \
