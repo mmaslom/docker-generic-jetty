@@ -1,11 +1,11 @@
-FROM oberthur/docker-busybox-java:jdk8_8.40.26
+FROM oberthur/docker-busybox-java:jdk8_8.45.14
 
 MAINTAINER Dawid Malinowski <d.malinowski@oberthur.com>
 
 ENV HOME=/opt/app
 ENV JETTY_VERSION_MAJOR 9
-ENV JETTY_VERSION_MINOR 9.2.10
-ENV JETTY_VERSION_BUILD v20150310
+ENV JETTY_VERSION_MINOR 9.2.11
+ENV JETTY_VERSION_BUILD v20150529
 ENV MARIADB_VERSION 1.1.8
 WORKDIR /opt/app
 
