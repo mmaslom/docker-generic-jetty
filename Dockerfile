@@ -9,8 +9,6 @@ ENV JETTY_VERSION_BUILD v20150310
 ENV MARIADB_VERSION 1.1.8
 WORKDIR /opt/app
 
-RUN opkg-install bash
-
 # Install Jetty 9
 RUN curl -L -O http://download.eclipse.org/jetty/stable-${JETTY_VERSION_MAJOR}/dist/jetty-distribution-${JETTY_VERSION_MINOR}.${JETTY_VERSION_BUILD}.tar.gz \
     && echo http://download.eclipse.org/jetty/stable-${JETTY_VERSION_MAJOR}/dist/jetty-distribution-${JETTY_VERSION_MINOR}.${JETTY_VERSION_BUILD}.tar.gz \
