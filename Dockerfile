@@ -20,6 +20,7 @@ RUN curl -L -O http://download.eclipse.org/jetty/stable-${JETTY_VERSION_MAJOR}/d
     && mkdir /opt/app/base \
     && curl -k https://raw.githubusercontent.com/jetty-project/logging-modules/master/logback/logging.mod > /opt/app/jetty/modules/logging.mod \
     && java -jar -Djetty.base=/opt/app/base /opt/app/jetty/start.jar --add-to-start=http,plus,jsp,jndi,annotations,deploy,logging \
+    && rm -v /opt/app/base/resources/logback.xml \
     && sed -i 's#<Set name="sendServerVersion"><Property name="jetty.send.server.version" default="true" /></Set>#<Set name="sendServerVersion"><Property name="jetty.send.server.version" default="false" /></Set>#' /opt/app/jetty/etc/jetty.xml \
     && sed -i 's#<New id="DefaultHandler" class="org.eclipse.jetty.server.handler.DefaultHandler"/>#<New id="DefaultHandler" class="org.eclipse.jetty.server.handler.DefaultHandler">\n               <Set name="serveIcon">false</Set>\n               <Set name="showContexts">false</Set>\n             </New>#' /opt/app/jetty/etc/jetty.xml \
     && curl -s -k -L -C - http://central.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/${MARIADB_VERSION}/mariadb-java-client-${MARIADB_VERSION}.jar > /opt/app/jetty/lib/ext/mariadb-java-client-${MARIADB_VERSION}.jar
