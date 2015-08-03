@@ -1,12 +1,12 @@
-FROM oberthur/docker-busybox-java:jdk8_8.45.14
+FROM oberthur/docker-alpine-java:jdk8_8.51.16
 
 MAINTAINER Dawid Malinowski <d.malinowski@oberthur.com>
 
 ENV HOME=/opt/app
 ENV JETTY_VERSION_MAJOR 9
-ENV JETTY_VERSION_MINOR 9.2.11
-ENV JETTY_VERSION_BUILD v20150529
-ENV MARIADB_VERSION 1.1.8
+ENV JETTY_VERSION_MINOR 9.3.1
+ENV JETTY_VERSION_BUILD v20150714
+ENV MARIADB_VERSION 1.2.0
 WORKDIR /opt/app
 
 # Install Jetty 9
