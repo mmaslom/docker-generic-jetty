@@ -1,12 +1,14 @@
-FROM oberthur/docker-alpine-java:jdk8_8.51.16
+FROM oberthur/docker-ubuntu-java:jdk8_8.65.17
 
 MAINTAINER Dawid Malinowski <d.malinowski@oberthur.com>
 
-ENV HOME=/opt/app
-ENV JETTY_VERSION_MAJOR 9
-ENV JETTY_VERSION_MINOR 9.3.1
-ENV JETTY_VERSION_BUILD v20150714
-ENV MARIADB_VERSION 1.2.0
+ENV HOME=/opt/app \
+    JETTY_VERSION_MAJOR 9 \
+    JETTY_VERSION_MINOR 9.3.6 \
+    JETTY_VERSION_BUILD v20151106 \
+    MARIADB_VERSION 1.2.3 \
+    _JAVA_OPTIONS="-Duser.home=/opt/app"
+
 WORKDIR /opt/app
 
 # Install Jetty 9
@@ -28,8 +30,6 @@ RUN curl -L -O http://download.eclipse.org/jetty/stable-${JETTY_VERSION_MAJOR}/d
 RUN echo "app:x:999:999::/opt/app:/bin/false" >> /etc/passwd; \
     echo "app:x:999:" >> /etc/group; \
     mkdir -p /opt/app; chown -R app:app /opt/app
-
-EXPOSE 8080
 
 ENTRYPOINT ["java", "-server", "-Duser.home=/opt/app", "-verbose:gc", "-XX:+UseCompressedOops", "-Djetty.home=/opt/app/jetty", "-Djetty.base=/opt/app/base", "-Djava.io.tmpdir=/opt/app/jetty/tmp", "-Djetty.state=/opt/app/jetty/jetty.state"]
 
