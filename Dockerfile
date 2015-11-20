@@ -3,10 +3,10 @@ FROM oberthur/docker-ubuntu-java:jdk8_8.65.17
 MAINTAINER Dawid Malinowski <d.malinowski@oberthur.com>
 
 ENV HOME=/opt/app \
-    JETTY_VERSION_MAJOR 9 \
-    JETTY_VERSION_MINOR 9.3.6 \
-    JETTY_VERSION_BUILD v20151106 \
-    MARIADB_VERSION 1.2.3 \
+    JETTY_VERSION_MAJOR+9 \
+    JETTY_VERSION_MINOR+9.3.6 \
+    JETTY_VERSION_BUILD+v20151106 \
+    MARIADB_VERSION+1.2.3 \
     _JAVA_OPTIONS="-Duser.home=/opt/app"
 
 WORKDIR /opt/app
