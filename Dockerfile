@@ -5,9 +5,7 @@ MAINTAINER Dawid Malinowski <d.malinowski@oberthur.com>
 ENV HOME=/opt/app \
     JETTY_VERSION_MAJOR=9 \
     JETTY_VERSION_MINOR=9.3.6 \
-    JETTY_VERSION_BUILD=v20151106 \
-    MARIADB_VERSION=1.2.3 \
-    _JAVA_OPTIONS="-Duser.home=/opt/app"
+    JETTY_VERSION_BUILD=v20151106
 
 WORKDIR /opt/app
 
@@ -23,8 +21,8 @@ RUN curl -L -O http://download.eclipse.org/jetty/stable-${JETTY_VERSION_MAJOR}/d
     && curl -k https://raw.githubusercontent.com/jetty-project/logging-modules/master/logback/logging.mod > /opt/app/jetty/modules/logging.mod \
     && sed -i 's#<Set name="sendServerVersion"><Property name="jetty.send.server.version" default="true" /></Set>#<Set name="sendServerVersion"><Property name="jetty.send.server.version" default="false" /></Set>#' /opt/app/jetty/etc/jetty.xml \
     && sed -i 's#<New id="DefaultHandler" class="org.eclipse.jetty.server.handler.DefaultHandler"/>#<New id="DefaultHandler" class="org.eclipse.jetty.server.handler.DefaultHandler">\n               <Set name="serveIcon">false</Set>\n               <Set name="showContexts">false</Set>\n             </New>#' /opt/app/jetty/etc/jetty.xml \
-    && curl -s -k -L -C - http://central.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/${MARIADB_VERSION}/mariadb-java-client-${MARIADB_VERSION}.jar > /opt/app/jetty/lib/ext/mariadb-java-client-${MARIADB_VERSION}.jar \
-    && java -jar -Djetty.base=/opt/app/base /opt/app/jetty/start.jar --add-to-start=http,plus,jsp,jndi,annotations,deploy,logging,ext
+    && java -jar -Djetty.base=/opt/app/base /opt/app/jetty/start.jar --add-to-start=http,plus,jsp,jndi,annotations,deploy,logging,ext \
+    && ln -s /opt/app /home/app
 
 # Add user app
 RUN echo "app:x:999:999::/opt/app:/bin/false" >> /etc/passwd; \
