@@ -1,11 +1,11 @@
-FROM oberthur/docker-ubuntu-java:jdk8_8.65.17
+FROM oberthur/docker-ubuntu-java:jdk8_8.74.02
 
 MAINTAINER Dawid Malinowski <d.malinowski@oberthur.com>
 
 ENV HOME=/opt/app \
     JETTY_VERSION_MAJOR=9 \
-    JETTY_VERSION_MINOR=9.3.6 \
-    JETTY_VERSION_BUILD=v20151106
+    JETTY_VERSION_MINOR=9.3.7 \
+    JETTY_VERSION_BUILD=v20160115
 
 WORKDIR /opt/app
 
@@ -25,9 +25,10 @@ RUN curl -L -O http://download.eclipse.org/jetty/stable-${JETTY_VERSION_MAJOR}/d
     && ln -s /opt/app /home/app
 
 # Add user app
-RUN echo "app:x:999:999::/opt/app:/bin/false" >> /etc/passwd; \
-    echo "app:x:999:" >> /etc/group; \
-    mkdir -p /opt/app; chown -R app:app /opt/app
+RUN groupadd -g 999 app \
+    && useradd -u 999 app -g app -s /bin/false -M -d /opt/app \
+    && mkdir -p /opt/app/logs/archives \
+    && chown -R app:app /opt/app
 
 ENTRYPOINT ["java", "-server", "-Duser.home=/opt/app", "-verbose:gc", "-XX:+UseCompressedOops", "-Djetty.home=/opt/app/jetty", "-Djetty.base=/opt/app/base", "-Djava.io.tmpdir=/opt/app/jetty/tmp", "-Djetty.state=/opt/app/jetty/jetty.state"]
 
