@@ -1,16 +1,16 @@
-FROM oberthur/docker-ubuntu-java:jdk8_8.91.14
+FROM oberthur/docker-ubuntu-java:jdk8_8.102.14
 
 MAINTAINER Dawid Malinowski <d.malinowski@oberthur.com>
 
 ENV HOME=/opt/app \
     JETTY_VERSION_MAJOR=9 \
-    JETTY_VERSION_MINOR=9.3.8 \
-    JETTY_VERSION_BUILD=v20160314
+    JETTY_VERSION_MINOR=9.3.12 \
+    JETTY_VERSION_BUILD=v20160915
 
 WORKDIR /opt/app
 
 # Install Jetty 9
-RUN curl -L -O http://download.eclipse.org/jetty/stable-${JETTY_VERSION_MAJOR}/dist/jetty-distribution-${JETTY_VERSION_MINOR}.${JETTY_VERSION_BUILD}.tar.gz \
+RUN curl -L -O http://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/${JETTY_VERSION_MINOR}.${JETTY_VERSION_BUILD}/jetty-distribution-${JETTY_VERSION_MINOR}.${JETTY_VERSION_BUILD}.tar.gz \
     && echo http://download.eclipse.org/jetty/stable-${JETTY_VERSION_MAJOR}/dist/jetty-distribution-${JETTY_VERSION_MINOR}.${JETTY_VERSION_BUILD}.tar.gz \
     && gunzip jetty-distribution-${JETTY_VERSION_MINOR}.${JETTY_VERSION_BUILD}.tar.gz \
     && tar -xf jetty-distribution-${JETTY_VERSION_MINOR}.${JETTY_VERSION_BUILD}.tar -C /opt/app \
