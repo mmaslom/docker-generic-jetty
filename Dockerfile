@@ -4,8 +4,8 @@ MAINTAINER Dawid Malinowski <d.malinowski@oberthur.com>
 
 ENV HOME=/opt/app \
     JETTY_VERSION_MAJOR=9 \
-    JETTY_VERSION_MINOR=9.3.12 \
-    JETTY_VERSION_BUILD=v20160915
+    JETTY_VERSION_MINOR=9.2.19 \
+    JETTY_VERSION_BUILD=v20160908
 
 WORKDIR /opt/app
 
